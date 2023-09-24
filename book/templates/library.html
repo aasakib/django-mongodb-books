@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Books App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f0f0f0; /* Light gray background */
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3498db; /* Blue navbar */
+            color: #fff; /* White text */
+            border-radius: 0;
+        }
+
+        .navbar-brand {
+            background-color: #e74c3c; /* Reddish-orange brand */
+            color: #fff; /* White text */
+            border: 2px solid #e74c3c;
+            border-radius: 5px;
+            padding: 5px 15px;
+            margin-right: 20px;
+        }
+
+        .navbar-link {
+            background-color: #e74c3c; /* Reddish-orange link */
+            color: #fff; /* White text */
+            margin-right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .navbar-link:hover {
+            background-color: #c0392b; /* Darker shade on hover */
+        }
+
+        .card {
+            background-color: #fff; /* White card background */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #333; /* Dark text */
+        }
+
+        .card-text {
+            color: #777; /* Lighter text */
+        }
+
+        .btn-warning {
+            background-color: #f39c12; /* Yellowish button */
+            color: #fff; /* White text */
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: #d68910; /* Darker shade on hover */
+        }
+
+        .btn-danger {
+            background-color: #e74c3c; /* Red button */
+            color: #fff; /* White text */
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="#" class="navbar-brand">Library App</a>
+    <a class="navbar-link btn-lg" href="{% url 'index' %}">Home</a>
+    <a href="{% url 'admin:index' %}" class="navbar-link btn-lg">Admin</a>
+    <a href="{% url 'upload-book' %}" class="navbar-link btn-lg">Upload Books</a>
+</nav>
+<br>
+<div class="container">
+    {% block content %}
+    <div class="row">
+        {% for book in shelf %}
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="{{ book.picture.url }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.name }}</h5>
+                    <p class="card-text">{{ book.describe }}</p>
+                </div>
+                <div class="card-footer">
+                    <p class="card-title">{{ book.author }}</p>
+                    <center>
+                        <a href="{% url 'update-book' book.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'delete-book' book.id %}" class="btn btn-danger">Delete</a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</div>
+</body>
+</html>
